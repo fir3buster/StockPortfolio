@@ -1,11 +1,15 @@
 import React from "react";
-import StockDataComponent from "./components/StockDataComponent";
+import StockData from "./components/StockData";
+import UserDisplay from "./components/UserDisplay";
 
 function App() {
     return (
         <div>
             <h2>CHECK FOR DATA FROM API</h2>
-            <StockDataComponent></StockDataComponent>
+            <StockData></StockData>
+            <br />
+            <br />
+            <UserDisplay></UserDisplay>
         </div>
     );
 }
