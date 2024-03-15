@@ -5,7 +5,7 @@ import UserDisplay from "./components/UserDisplay";
 function App() {
     return (
         <div>
-            <h2>CHECK FOR DATA FROM API</h2>
+            <h2>STOCK PORTFOLIO</h2>
             <StockData></StockData>
             <br />
             <br />

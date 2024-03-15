@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 
-const StockPortfolio = (props) => {
+const PortfolioDisplay = (props) => {
     const [stock, setStock] = useState("");
     return <div></div>;
 };
 
-export default StockPortfolio;
+export default PortfolioDisplay;

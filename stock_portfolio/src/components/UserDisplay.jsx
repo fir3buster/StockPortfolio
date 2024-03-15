@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import AddUserModal from "./AddUserModal";
 import DeleteUserModal from "./DeleteUserModal";
+import UpdateUserModal from "./UpdateUserModal";
 
 const UserDisplay = () => {
     const [Users, setUsers] = useState([]);
@@ -36,7 +37,8 @@ const UserDisplay = () => {
     };
 
     const handleUpdateUserClick = (user) => {
-        setSelectedUser(user)
+        console.log(JSON.stringify(user));
+        setSelectedUser(user);
         setShowUpdateUserModal(true);
     };
 
@@ -113,9 +115,13 @@ const UserDisplay = () => {
             )}
 
             <br />
-            {/* {showUpdateUserModal && (
-                
-            )} */}
+            {showUpdateUserModal && (
+                <UpdateUserModal
+                    onClose={handleModalClose}
+                    user={selectedUser}
+                    getUserData={getUserData}
+                ></UpdateUserModal>
+            )}
         </div>
     );
 };

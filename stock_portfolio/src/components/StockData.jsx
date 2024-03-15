@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import StockPortfolio from "./StockPortfolio";
+import PortfolioDisplay from "./PortfolioDisplay";
 
 const StockData = () => {
     const [stockRawData, setStockRawData] = useState([]);
@@ -233,16 +233,17 @@ const StockData = () => {
             {JSON.stringify(allStockData)}
             {allStockData ? (
                 <ul>
-                    {allStockData.records && allStockData.records.map((record) => (
-                        <li key={record.id}>ticker = {record.fields.ticker}</li>
-                    ))}
+                    {allStockData.records &&
+                        allStockData.records.map((record) => (
+                            <li key={record.id}>
+                                ticker = {record.fields.ticker}
+                            </li>
+                        ))}
                 </ul>
             ) : (
                 <p>Loading...</p>
             )}
-            <StockPortfolio
-                allStockData={allStockData}
-            ></StockPortfolio>
+            <PortfolioDisplay allStockData={allStockData}></PortfolioDisplay>
         </div>
     );
 };
