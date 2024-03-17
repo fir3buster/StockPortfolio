@@ -220,7 +220,7 @@ const StockData = () => {
             <button className="getStockData" onClick={ProcessStockDataButton}>
                 Update Data
             </button>
-            {JSON.stringify(stockRawData)}
+            {/* {JSON.stringify(stockRawData)} */}
             {stockRawData ? (
                 <ul>
                     {stockRawData.map(({ data }, idx) => (

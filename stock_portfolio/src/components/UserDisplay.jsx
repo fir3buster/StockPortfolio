@@ -3,7 +3,7 @@ import AddUserModal from "./AddUserModal";
 import DeleteUserModal from "./DeleteUserModal";
 import UpdateUserModal from "./UpdateUserModal";
 
-const UserDisplay = () => {
+const UserDisplay = ({ handleUsersData }) => {
     const [Users, setUsers] = useState([]);
     const [selectedUser, setSelectedUser] = useState([]);
     const [singleUser, setSingleUser] = useState("");
@@ -24,10 +24,12 @@ const UserDisplay = () => {
             });
 
             if (res.ok) {
-                const UserData = await res.json();
-                setUsers(UserData);
+                const userData = await res.json();
+                setUsers(userData);
+                handleUsersData(userData);
             }
         } catch (error) {
+            console.log(error)
             console.log(error.message);
         }
     };
