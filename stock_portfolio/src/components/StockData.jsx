@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import PortfolioDisplay from "./PortfolioDisplay";
 
-
-const StockData = ({users}) => {
+const StockData = ({ users }) => {
     const [stockRawData, setStockRawData] = useState([]);
     const [allStockData, setAllStockData] = useState([]);
     const apiToken = import.meta.env.VITE_STOCK_DATA_API_TOKEN;
@@ -10,61 +9,61 @@ const StockData = ({users}) => {
     const airtableApiToken = import.meta.env.VITE_AIRTABLE_API_TOKEN;
     const airtableUrl = import.meta.env.VITE_AIRTABLE_URL;
 
-    console.log(users)
-    // const tickers = [
-    //     "AAPL",
-    //     "TSLA",
-    //     "MSFT",
-    //     "NVDA",
-    //     "AMZN",
-    //     "GOOGL",
-    //     "META",
-    //     "BRK.B",
-    //     "LLY",
-    //     "TSM",
-    //     "V",
-    //     "JPM",
-    //     "WMT",
-    //     "UNH",
-    //     "MA",
-    //     "XOM",
-    //     "JNJ",
-    //     "ABBV",
-    //     "CVX",
-    //     "ORCL",
-    //     "PEP",
-    //     "SHEL",
-    //     "AZN",
-    //     "TMUS",
-    //     "VZ",
-    //     "PFE",
-    //     "COP",
-    //     "BLK",
-    //     "PG",
-    //     "COST",
-    //     "BAC",
-    //     "NFLX",
-    //     "KO",
-    //     "C",
-    //     "UBS",
-    //     "PFE",
-    //     "AXP",
-    //     "NKE",
-    //     "T",
-    //     "SBUX",
-    //     "MCD",
-    //     "BABA",
-    //     "SLB",
-    //     "HSBC",
-    //     "WFC",
-    //     "ABT",
-    //     "BCS",
-    //     "HES",
-    //     "OXY",
-    //     "INTC",
-    // ];
-    
-    const tickers = ["AAPL"];
+    // console.log(users)
+    const tickers = [
+        "AAPL",
+        "TSLA",
+        "MSFT",
+        "NVDA",
+        "AMZN",
+        "GOOGL",
+        "META",
+        "BRK.B",
+        "LLY",
+        "TSM",
+        "V",
+        "JPM",
+        "WMT",
+        "UNH",
+        "MA",
+        "XOM",
+        "JNJ",
+        "ABBV",
+        "CVX",
+        "ORCL",
+        "PEP",
+        "SHEL",
+        "AZN",
+        "TMUS",
+        "VZ",
+        "PFE",
+        "COP",
+        "BLK",
+        "PG",
+        "COST",
+        "BAC",
+        "NFLX",
+        "KO",
+        "C",
+        "UBS",
+        "PFE",
+        "AXP",
+        "NKE",
+        "T",
+        "SBUX",
+        "MCD",
+        "BABA",
+        "SLB",
+        "HSBC",
+        "WFC",
+        "ABT",
+        "BCS",
+        "HES",
+        "OXY",
+        "INTC",
+    ];
+
+    // const tickers = ["AAPL"];
     // console.log(tickers.length);
 
     // `https://api.stockdata.org/v1/data/quote?symbols=AAPL,TSLA,MSFT&api_token=${apiToken}`;
@@ -122,7 +121,7 @@ const StockData = ({users}) => {
 
             if (res.ok) {
                 const stockData = await res.json();
-                console.log(JSON.stringify(stockData));
+                // console.log(JSON.stringify(stockData));
                 setAllStockData(stockData);
             }
         } catch (error) {
@@ -267,8 +266,8 @@ const StockData = ({users}) => {
     };
 
     const handleButtonClick = async () => {
-        ProcessStockDataButton()
-    }
+        ProcessStockDataButton();
+    };
 
     useEffect(() => {
         getAllStockData();
@@ -303,7 +302,11 @@ const StockData = ({users}) => {
             ) : (
                 <p>Loading...</p>
             )} */}
-            <PortfolioDisplay allStockData={allStockData} users={users} handleButtonClick={handleButtonClick}></PortfolioDisplay>
+            <PortfolioDisplay
+                allStockData={allStockData}
+                users={users}
+                handleButtonClick={handleButtonClick}
+            ></PortfolioDisplay>
         </div>
     );
 };

@@ -13,7 +13,7 @@ function App() {
         setUsers(userData);
     };
 
-    console.log(users);
+    // console.log(users);
     return (
         <div>
             {/* <h2>STOCK PORTFOLIO</h2>
@@ -28,7 +28,7 @@ function App() {
                     {/* :id => : to identify key-value pair */}
                     <Route
                         path="/"
-                        element={<Navigate replace to="/homepage" />}
+                        element={<Navigate replace to="/home" />}
                     ></Route>
                     <Route
                         path="user"
@@ -41,9 +41,6 @@ function App() {
                         path="portfolio"
                         element={<StockData users={users} />}
                     ></Route>
-                    {/* <Route path="portfolio" element={<StockData />}></Route>
-                    <Route path="user" element={<UserDisplay />}></Route> */}
-                    {/* <Route path="*" element={<NotFound />} /> */}
                 </Routes>
             </Suspense>
         </div>

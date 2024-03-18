@@ -54,7 +54,7 @@ const Overlay = ({
             if (res.ok) {
                 getAllPortfoliosData();
                 onClose();
-                portfolioNameRef = "";
+                portfolioNameRef.current.value = "";
             } else {
                 throw new Error("UserPortfolioData Patch response was not OK!");
             }
