@@ -26,6 +26,7 @@ const Overlay = ({
     const staffName = portfolioData.fields["staff_name (from UserData)"][0];
     console.log(JSON.stringify(portfolioData));
     console.log(staffName);
+
     // updating existing portfolio
     console.log("Updating user Portfolio to AIRTABLE userPortfolioData");
     const updatePortfolio = async () => {

@@ -3,20 +3,28 @@ import UserDisplay from "./UserDisplay";
 import AddUserPortfolioModal from "./AddUserPortfolioModal";
 import DeleteUserPortfolioModal from "./DeleteUserPortfolioModal";
 import UpdateUserPortfolioModal from "./UpdateUserPortfolioModal";
+import AddStockModal from "./AddStockModal";
+import UpdateStockModal from "./UpdateStockModal";
+import DeleteStockModal from "./DeleteStockModal";
 
-const PortfolioDisplay = (props) => {
+const PortfolioDisplay = ({ allStockData }) => {
     const [users, setUsers] = useState([]);
-    const [selectedUser, setSelectedUser] = useState(); // id of user in userData table
+    const [selectedUser, setSelectedUser] = useState(""); // id of user in userData table
     const [allPortfolios, setAllPortfolios] = useState([]);
     const [selectedUserPortfolios, setSelectedUserPortfolios] = useState([]);
-    const [selectedPortfolio, setSelectedPortfolio] = useState([]);
-    const [stock, setStock] = useState("");
+    const [selectedPortfolio, setSelectedPortfolio] = useState(""); //id of selected user portfolio in userPortfolioData table
+    const [allUserStockData, setAllUserStockData] = useState([]);
+    const [selectedPortfolioStocks, setSelectedPortfolioStocks] = useState([]);
+    const [selectedStock, setSelectedStock] = useState([]);
     const [showAddUserPortfolioModal, setShowAddUserPortfolioModal] =
         useState(false);
     const [showUpdateUserPortfolioModal, setShowUpdateUserPortfolioModal] =
         useState(false);
     const [showDeleteUserPortfolioModal, setShowDeleteUserPortfolioModal] =
         useState(false);
+    const [showAddStockModal, setShowAddStockModal] = useState(false);
+    const [showUpdateStockModal, setShowUpdateStockModal] = useState(false);
+    const [showDeleteStockModal, setShowDeleteStockModal] = useState(false);
 
     const airtableApiToken = import.meta.env.VITE_AIRTABLE_API_TOKEN;
     const airtableUrl = import.meta.env.VITE_AIRTABLE_URL;
@@ -45,13 +53,13 @@ const PortfolioDisplay = (props) => {
         }
     };
 
-    // get userPortfolio records based on UserId from stock data
-    const getSelectedUserPortfolios = async (selectedUser = null) => {
+    // get userPortfolio records based on UserId from UserPortfolioData
+    const getSelectedUserPortfolios = async (selectedUser = "") => {
         // selectedUser => based on user id
         // check if the selectedUser is in usersList
         // check if the selectedUser contains any portfolio
         console.log(`Selected USER: ${selectedUser}`);
-        if (selectedUser === null) {
+        if (selectedUser === "" || selectedUser === undefined) {
             console.log("User not selected yet!");
             return;
         }
@@ -59,11 +67,12 @@ const PortfolioDisplay = (props) => {
         //     user.fields["portfolio_name (from UserPortfolioData)"];
         // console.log(userPortFoliosData);
 
-        
         const user = users.records.find((user) => user.id === selectedUser);
+        console.log(allPortfolios.records[0].fields.UserData[0]);
+        console.log(selectedUser);
         const userPortfolios = allPortfolios.records.filter((user) => {
-            console.log(user.fields.UserData[0])
-            console.log(selectedUser)
+            console.log(user);
+            console.log(selectedUser);
             return user.fields.UserData[0] === selectedUser;
         });
 
@@ -80,6 +89,84 @@ const PortfolioDisplay = (props) => {
                     `User ${user.fields.staff_name} does not have portfolio!`
                 );
             }
+            setSelectedUserPortfolios([]);
+            return;
+        }
+    };
+
+    // Get all UserStocksData
+    const getAllUserStockData = async () => {
+        try {
+            console.log("Getting all UserStockData from airtable...");
+            const res = await fetch(`${airtableUrl}UserStockData?`, {
+                headers: {
+                    Authorization: "Bearer " + airtableApiToken,
+                },
+            });
+
+            if (res.ok) {
+                const userStockData = await res.json();
+                setAllUserStockData(userStockData);
+            }
+        } catch (error) {
+            console.log(error.message);
+        }
+    };
+
+    // Get stocks records based on selectedPortfolio Id
+    const getSelectedPortfolioStocks = async (
+        selectedPortfolio = "",
+        selectedUserPortfolios = []
+    ) => {
+        // selectedUser => based on user id
+        // check if the selectedUser is in usersList
+        // check if the selectedUser contains any portfolio
+        console.log(JSON.stringify(selectedUserPortfolios));
+        console.log(`Selected PORTFOLIO: ${selectedPortfolio}`);
+        console.log(
+            `check for SELECTED PORTFOLIOS: ${selectedUserPortfolios.length}`
+        );
+
+        if (selectedPortfolio === "") {
+            console.log("Portfolio not selected yet!");
+            if (selectedUserPortfolios.length === 0) {
+                console.log("Users not selected yet");
+            }
+            setSelectedPortfolioStocks([]);
+            return;
+        }
+        // const userPortFoliosData =
+        //     user.fields["portfolio_name (from UserPortfolioData)"];
+        // console.log(userPortFoliosData);
+
+        const portfolio = selectedUserPortfolios.find(
+            (portfolio) => portfolio.id === selectedPortfolio
+        );
+
+        console.log(portfolio);
+        console.log(allUserStockData);
+        const userStocks = allUserStockData.records.filter((portfolio) => {
+            console.log(portfolio.fields.UserPortfolioData[0]);
+            console.log(selectedPortfolio);
+            return portfolio.fields.UserPortfolioData[0] === selectedPortfolio;
+        });
+
+        console.log(JSON.stringify(portfolio));
+        console.log(userStocks);
+
+        if (portfolio && userStocks.length > 0) {
+            console.log("ready to update selectedportfoliostocks state");
+            setSelectedPortfolioStocks(userStocks);
+        } else {
+            // not found
+            if (!portfolio) {
+                console.log("Please select a portfolio!");
+            } else {
+                console.log(
+                    `portfolio ${portfolio.fields.portfolio_name} does not have stock!`
+                );
+            }
+            setSelectedPortfolioStocks([]);
             return;
         }
     };
@@ -87,8 +174,8 @@ const PortfolioDisplay = (props) => {
     // Event handler to handle selection change
     const handleUserSelectionChange = (event) => {
         setSelectedUser(event.target.value);
-        setSelectedPortfolio([]);
-        // getSelectedUserPortfolio(event.target.value);
+        setSelectedPortfolio("");
+        // getSelectedUserPortfolios(event.target.value);
     };
 
     const handleUserPortfolioSelectionChange = (event) => {
@@ -116,13 +203,63 @@ const PortfolioDisplay = (props) => {
         setShowDeleteUserPortfolioModal(false);
     };
 
+    const handleAddStockClick = () => {
+        setShowAddStockModal(true);
+    };
+
+    const handleUpdateStockClick = (stock) => {
+        setSelectedStock(stock);
+        setShowUpdateStockModal(true);
+    };
+
+    const handleDeleteStockClick = (stock) => {
+        setSelectedStock(stock);
+        setShowDeleteStockModal(true);
+    };
+
+    const handleStockModalClose = () => {
+        setShowAddStockModal(false);
+        setShowUpdateStockModal(false);
+        setShowDeleteStockModal(false);
+    };
+
     useEffect(() => {
         getAllPortfoliosData();
     }, []);
 
     useEffect(() => {
+        getAllUserStockData();
+    }, []);
+
+    useEffect(() => {
         getSelectedUserPortfolios(selectedUser);
     }, [selectedUser]);
+
+    useEffect(() => {
+        getSelectedPortfolioStocks(selectedPortfolio, selectedUserPortfolios);
+    }, [selectedPortfolio, selectedUserPortfolios]);
+
+    useEffect(() => {
+        // Update selectedPortfolioStocks whenever allUserStockData changes
+        if (allUserStockData && allUserStockData.records) {
+            setSelectedPortfolioStocks(
+                allUserStockData.records.filter((portfolio) => {
+                    return (
+                        portfolio.fields.UserPortfolioData[0] ===
+                        selectedPortfolio
+                    );
+                })
+            );
+        }
+    }, [allUserStockData]);
+
+    // Working on stocksData
+    // getting allstocksdata from higher level through propping
+
+    // add stock
+    // console.log(allStockData);
+    // const listAllStocks = JSON.stringify(props.allStocksData)
+    // console.log(listAllStocks)
 
     return (
         <div>
@@ -138,7 +275,7 @@ const PortfolioDisplay = (props) => {
             </button>
             <br />
             {/* {selectedPortfolio && JSON.stringify(selectedPortfolio)} */}
-            {selectedPortfolio.length > 0 && (
+            {selectedPortfolio && (
                 <div key={selectedPortfolio}>
                     <span>name ={selectedPortfolio}</span>
                     <button
@@ -195,6 +332,34 @@ const PortfolioDisplay = (props) => {
             <h2>selected portfolio</h2>
             {selectedPortfolio}
             <br />
+            <h2>Selected portfolio stocks</h2>
+            {/* DISPLAY ALL STOCKS OF A SELECTED PORTFOLIIO, STYLING REQUIRED HERE */}
+            {JSON.stringify(selectedPortfolioStocks)}
+
+            {selectedPortfolio && selectedPortfolioStocks && (
+                <button onClick={handleAddStockClick}>
+                    Add Stock to Portfolio
+                </button>
+            )}
+
+            <br />
+            {selectedPortfolio &&
+            selectedPortfolioStocks &&
+            selectedPortfolioStocks.length > 0 ? (
+                selectedPortfolioStocks.map((stock) => (
+                    <div key={stock.id}>
+                        <span>name = {stock.fields.stock_name}</span>
+                        <button onClick={() => handleDeleteStockClick(stock)}>
+                            Delete
+                        </button>
+                        <button onClick={() => handleUpdateStockClick(stock)}>
+                            Update
+                        </button>
+                    </div>
+                ))
+            ) : (
+                <p>You have no stocks in current portfolio!</p>
+            )}
 
             <br />
 
@@ -216,6 +381,7 @@ const PortfolioDisplay = (props) => {
                 ></DeleteUserPortfolioModal>
             )}
             <br />
+            {/* UPDATE PORTFOLIO */}
             {showUpdateUserPortfolioModal && (
                 <UpdateUserPortfolioModal
                     onClose={handlePortfolioModalClose}
@@ -223,6 +389,35 @@ const PortfolioDisplay = (props) => {
                     portfolio={selectedPortfolio}
                     getAllPortfoliosData={getAllPortfoliosData}
                 ></UpdateUserPortfolioModal>
+            )}
+
+            {/* ADD STOCK */}
+            {showAddStockModal && (
+                <AddStockModal
+                    onClose={handleStockModalClose}
+                    allUserStockData={allUserStockData}
+                    allStockData={allStockData}
+                    portfolio={selectedPortfolio}
+                    getAllUserStockData={getAllUserStockData}
+                ></AddStockModal>
+            )}
+            <br />
+            {/* UPDATE STOCK */}
+            {showUpdateStockModal && (
+                <UpdateStockModal
+                    onClose={handleStockModalClose}
+                    stock={selectedStock}
+                    getAllUserStockData={getAllUserStockData}
+                ></UpdateStockModal>
+            )}
+            <br />
+            {/* DELETE STOCK */}
+            {showDeleteStockModal && (
+                <DeleteStockModal
+                    onClose={handleStockModalClose}
+                    stock={selectedStock}
+                    getAllUserStockData={getAllUserStockData}
+                ></DeleteStockModal>
             )}
         </div>
     );

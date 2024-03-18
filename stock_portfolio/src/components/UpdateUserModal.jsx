@@ -23,7 +23,7 @@ const Overlay = ({ onClose, user, getUserData }) => {
             const emailAdd = emailAddRef.current.value;
             const phoneNo = phoneNoRef.current.value;
             const res = await fetch(`${airtableUrl}UserData`, {
-                method: "PUT",
+                method: "PATCH",
                 headers: {
                     Authorization: "Bearer " + airtableApiToken,
                     "Content-Type": "application/json",

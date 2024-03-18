@@ -40,8 +40,8 @@ const Overlay = ({ onClose, users, getAllPortfoliosData }) => {
                 if (res.ok) {
                     getAllPortfoliosData();
                     onClose();
-                    selectedUserRef = "";
-                    portfolioNameRef = "";
+                    selectedUserRef.current.value = "";
+                    portfolioNameRef.current.value = "";
                 } else {
                     throw new Error(
                         "UserPortfolioData Post response was not OK!"

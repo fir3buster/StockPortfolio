@@ -3,7 +3,7 @@ import PortfolioDisplay from "./PortfolioDisplay";
 
 const StockData = () => {
     const [stockRawData, setStockRawData] = useState([]);
-    const [allStockData, setAllStockData] = useState();
+    const [allStockData, setAllStockData] = useState([]);
     const apiToken = import.meta.env.VITE_STOCK_DATA_API_TOKEN;
     const stockRawDataUrl = import.meta.env.VITE_STOCK_DATA_URL;
     const airtableApiToken = import.meta.env.VITE_AIRTABLE_API_TOKEN;
