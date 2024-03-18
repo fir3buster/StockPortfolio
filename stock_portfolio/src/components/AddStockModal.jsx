@@ -35,23 +35,26 @@ const Overlay = ({
             console.log(JSON.stringify(stockData));
 
             const stockName = stockData.fields.name;
+            const marketValue = parseFloat(
+                stockData.fields.price * parseFloat(stockUnits)
+            ).toFixed(2);
             const unrealisedGainLoss = parseFloat(
                 (stockData.fields.price - parseFloat(stockUnitPrice)) *
                     parseFloat(stockUnits)
             ).toFixed(2); // create a math calculation here
             // stockdata price - stock unit price * stock units
 
-            console.log(typeof portfolio);
-            console.log(JSON.stringify(portfolio));
-            console.log(typeof unrealisedGainLoss);
-            console.log(
-                stockName,
-                [stockId],
-                [portfolio],
-                stockUnits,
-                stockUnitPrice,
-                unrealisedGainLoss
-            );
+            // console.log(typeof portfolio);
+            // console.log(JSON.stringify(portfolio));
+            // console.log(typeof unrealisedGainLoss);
+            // console.log(
+            //     stockName,
+            //     [stockId],
+            //     [portfolio],
+            //     stockUnits,
+            //     stockUnitPrice,
+            //     unrealisedGainLoss
+            // );
             if (stockData && portfolio) {
                 const res = await fetch(`${airtableUrl}UserStockData`, {
                     method: "POST",
@@ -68,7 +71,9 @@ const Overlay = ({
                                     UserPortfolioData: [portfolio],
                                     units: parseInt(stockUnits),
                                     unit_price: parseFloat(stockUnitPrice),
-                                    unrealised_gain_loss: parseFloat(unrealisedGainLoss),
+                                    unrealised_gain_loss:
+                                        parseFloat(unrealisedGainLoss),
+                                    market_value: parseFloat(marketValue)
                                 },
                             },
                         ],
@@ -100,13 +105,13 @@ const Overlay = ({
                 <br />
                 <br />
                 <div className="row">
-                    <div className="col-md-3"></div>
+                    <div className="col-md-1"></div>
                     <div className="col-md-3">Ticker</div>
                     <select
                         ref={selectedStockRef}
                         onChange={handleChange}
                         value={selectStockOption}
-                        className="col-md-3"
+                        className="col-md-7"
                     >
                         <option value="">Select a stock...</option>
                         {allStockData.records &&
@@ -116,34 +121,34 @@ const Overlay = ({
                                 </option>
                             ))}
                     </select>
-                    <div className="col-md-3"></div>
+                    <div className="col-md-1"></div>
                 </div>
 
                 <div className="row">
-                    <div className="col-md-3"></div>
+                    <div className="col-md-1"></div>
                     <div className="col-md-3">Units</div>
                     <input
                         ref={stockUnitsRef}
                         type="number"
-                        className="col-md-3"
+                        className="col-md-7"
                         // on useRef, default value
                         defaultValue="100"
                     />
-                    <div className="col-md-3"></div>
+                    <div className="col-md-1"></div>
                 </div>
 
                 <div className="row">
-                    <div className="col-md-3"></div>
+                    <div className="col-md-1"></div>
                     <div className="col-md-3">Unit Price</div>
                     <input
                         ref={stockUnitPriceRef}
                         type="number"
                         step="0.01"
-                        className="col-md-3"
+                        className="col-md-7"
                         // on useRef, default value
                         defaultValue="0.00"
                     />
-                    <div className="col-md-3"></div>
+                    <div className="col-md-1"></div>
                 </div>
 
                 <br />

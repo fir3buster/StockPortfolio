@@ -69,28 +69,28 @@ const Overlay = ({
                 <br />
                 <br />
                 <div className="row">
-                    <div className="col-md-3"></div>
+                    <div className="col-md-1"></div>
                     <div className="col-md-3">Name</div>
                     <input
-                        className="col-md-3"
+                        className="col-md-7"
                         // on useRef, default value
                         defaultValue={staffName}
                         readOnly
                     />
-                    <div className="col-md-3"></div>
+                    <div className="col-md-1"></div>
                 </div>
 
                 <div className="row">
-                    <div className="col-md-3"></div>
+                    <div className="col-md-1"></div>
                     <div className="col-md-3">Name of Portfolio</div>
                     <input
                         ref={portfolioNameRef}
                         type="text"
-                        className="col-md-3"
+                        className="col-md-7"
                         // on useRef, default value
                         defaultValue="Name your portfolio"
                     />
-                    <div className="col-md-3"></div>
+                    <div className="col-md-1"></div>
                 </div>
 
                 <br />

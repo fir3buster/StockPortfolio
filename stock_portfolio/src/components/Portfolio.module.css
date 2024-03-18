@@ -1,0 +1,141 @@
+/* Container for the entire portfolio display */
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* border: 2px solid black; */
+    padding: 30px;
+}
+
+/* Container for the entire portfolio display */
+.portfolio-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 2px solid black;
+    padding: 20px;
+    background-color: rgba(123, 171, 235, 0.39);
+    min-width: 1000px; /* Adjust min-width as needed */
+    min-height: 650px; /* Adjust min-height as needed */
+    position: relative;
+}
+
+/* Sub-container for the title and create portfolio button */
+.title-container {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 10px;
+    background-color: aliceblue;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+/* Container for selected user and portfolio information */
+.selection-container {
+    display: flex;
+    /* flex-direction: row; */
+    /* justify-content: space-between; */
+    align-items: center;
+    width: 100%;
+    margin-bottom: 10px;
+    background-color: aliceblue;
+    border-radius: 10px;
+    padding: 10px 5px;
+}
+
+/* Sub-container for selections */
+.selection-subContainer {
+    display: flex;
+    margin-right: 10px;
+    justify-content: space-between;
+    /* display: flex; */
+    /* justify-content: flex-start;*/
+    max-width: 200px;
+}
+
+/* Sub-container for update and delete buttons */
+.action-buttons {
+    /* display: flex; */
+    justify-content: space-between;
+    margin-left: auto;
+}
+
+.action-buttons .button {
+    margin: 1px 10px;
+}
+
+.action-buttons .button {
+    margin: 1px 5px;
+}
+
+/* Container for the create stock button */
+.create-stock-container {
+    display: flex;
+    /* justify-content: center; */
+    width: 100%;
+    background-color: aliceblue;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    padding: 10px 5px;
+}
+
+.stock-list-container {
+    width: 100%;
+    background-color: lightgray;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    padding: 10px 5px;
+}
+
+.stock-header,
+.stock-item {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr) 0.5fr 0.5fr; /* Adjust the number of columns as needed */
+    gap: 10px;
+    padding: 0px 0px;
+    border-bottom: 1px solid aliceblue;
+    align-items: center;
+    justify-items: center;
+}
+
+.stock-header {
+    font-weight: bold; 
+}
+
+.stock-item {
+    align-items: center;
+    justify-items: center;
+}
+
+/* .image {
+    display: flex;
+    margin-right: 10px;
+    width:25px;
+    background:inherit;
+} */
+
+.imageButton {
+    display: flex;
+    margin: 0px 5px;
+}
+
+.stockButton {
+    display: flex;
+    margin: 4px 5px;
+}
+
+.result-container {
+    position: absolute;
+    bottom: 10px;
+    width: 96%;
+    background-color: lightgray;
+    display:flex;
+    justify-content: space-between;
+}
+
+.result {
+    /* margin-left: 0; */
+    padding: 5px 10px;
+}

@@ -73,68 +73,68 @@ const Overlay = ({ onClose, getUserData }) => {
                 <br />
                 <br />
                 <div className="row">
-                    <div className="col-md-3"></div>
+                    <div className="col-md-1"></div>
                     <div className="col-md-3">Name</div>
                     <input
                         ref={staffNameRef}
                         type="text"
-                        className="col-md-3"
+                        className="col-md-7"
                         // on useRef, default value
                         defaultValue="Name"
                     />
-                    <div className="col-md-3"></div>
+                    <div className="col-md-1"></div>
                 </div>
 
                 <div className="row">
-                    <div className="col-md-3"></div>
+                    <div className="col-md-1"></div>
                     <div className="col-md-3">Role</div>
                     <input
                         ref={staffRoleRef}
                         type="text"
-                        className="col-md-3"
+                        className="col-md-7"
                         // on useRef, default value
                         defaultValue="Role"
                     />
-                    <div className="col-md-3"></div>
+                    <div className="col-md-1"></div>
                 </div>
 
                 <div className="row">
-                    <div className="col-md-3"></div>
+                    <div className="col-md-1"></div>
                     <div className="col-md-3">Staff ID</div>
                     <input
                         ref={staffIdRef}
                         type="text"
-                        className="col-md-3"
+                        className="col-md-7"
                         // on useRef, default value
                         defaultValue="ID"
                     />
-                    <div className="col-md-3"></div>
+                    <div className="col-md-1"></div>
                 </div>
 
                 <div className="row">
-                    <div className="col-md-3"></div>
+                    <div className="col-md-1"></div>
                     <div className="col-md-3">Email Address</div>
                     <input
                         ref={emailAddRef}
                         type="text"
-                        className="col-md-3"
+                        className="col-md-7"
                         // on useRef, default value
                         defaultValue="Email"
                     />
-                    <div className="col-md-3"></div>
+                    <div className="col-md-1"></div>
                 </div>
 
                 <div className="row">
-                    <div className="col-md-3"></div>
+                    <div className="col-md-1"></div>
                     <div className="col-md-3">Phone No</div>
                     <input
                         ref={phoneNoRef}
                         type="text"
-                        className="col-md-3"
+                        className="col-md-7"
                         // on useRef, default value
                         defaultValue="Phone"
                     />
-                    <div className="col-md-3"></div>
+                    <div className="col-md-1"></div>
                 </div>
 
                 <br />

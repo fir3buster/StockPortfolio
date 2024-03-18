@@ -1,15 +1,71 @@
 import React, { useState, useEffect } from "react";
 import PortfolioDisplay from "./PortfolioDisplay";
 
-const StockData = () => {
+
+const StockData = ({users}) => {
     const [stockRawData, setStockRawData] = useState([]);
     const [allStockData, setAllStockData] = useState([]);
     const apiToken = import.meta.env.VITE_STOCK_DATA_API_TOKEN;
     const stockRawDataUrl = import.meta.env.VITE_STOCK_DATA_URL;
     const airtableApiToken = import.meta.env.VITE_AIRTABLE_API_TOKEN;
     const airtableUrl = import.meta.env.VITE_AIRTABLE_URL;
-    // const tickers = ["AAPL", "TSLA", "MSFT"];
+
+    console.log(users)
+    // const tickers = [
+    //     "AAPL",
+    //     "TSLA",
+    //     "MSFT",
+    //     "NVDA",
+    //     "AMZN",
+    //     "GOOGL",
+    //     "META",
+    //     "BRK.B",
+    //     "LLY",
+    //     "TSM",
+    //     "V",
+    //     "JPM",
+    //     "WMT",
+    //     "UNH",
+    //     "MA",
+    //     "XOM",
+    //     "JNJ",
+    //     "ABBV",
+    //     "CVX",
+    //     "ORCL",
+    //     "PEP",
+    //     "SHEL",
+    //     "AZN",
+    //     "TMUS",
+    //     "VZ",
+    //     "PFE",
+    //     "COP",
+    //     "BLK",
+    //     "PG",
+    //     "COST",
+    //     "BAC",
+    //     "NFLX",
+    //     "KO",
+    //     "C",
+    //     "UBS",
+    //     "PFE",
+    //     "AXP",
+    //     "NKE",
+    //     "T",
+    //     "SBUX",
+    //     "MCD",
+    //     "BABA",
+    //     "SLB",
+    //     "HSBC",
+    //     "WFC",
+    //     "ABT",
+    //     "BCS",
+    //     "HES",
+    //     "OXY",
+    //     "INTC",
+    // ];
+    
     const tickers = ["AAPL"];
+    // console.log(tickers.length);
 
     // `https://api.stockdata.org/v1/data/quote?symbols=AAPL,TSLA,MSFT&api_token=${apiToken}`;
 
@@ -210,18 +266,22 @@ const StockData = () => {
         }
     };
 
+    const handleButtonClick = async () => {
+        ProcessStockDataButton()
+    }
+
     useEffect(() => {
         getAllStockData();
     }, []);
 
     return (
         <div>
-            <h2>Stock Data</h2>
-            <button className="getStockData" onClick={ProcessStockDataButton}>
+            {/* <h2>Stock Data</h2>
+            <button className="getStockData" onClick={handleButtonClick}>
                 Update Data
-            </button>
+            </button> */}
             {/* {JSON.stringify(stockRawData)} */}
-            {stockRawData ? (
+            {/* {stockRawData ? (
                 <ul>
                     {stockRawData.map(({ data }, idx) => (
                         <li key={idx}>ticker = {data[0].ticker}</li>
@@ -242,8 +302,8 @@ const StockData = () => {
                 </ul>
             ) : (
                 <p>Loading...</p>
-            )}
-            <PortfolioDisplay allStockData={allStockData}></PortfolioDisplay>
+            )} */}
+            <PortfolioDisplay allStockData={allStockData} users={users} handleButtonClick={handleButtonClick}></PortfolioDisplay>
         </div>
     );
 };

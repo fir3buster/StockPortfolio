@@ -20,7 +20,7 @@ const Overlay = ({ onClose, portfolio, getAllPortfoliosData }) => {
         console.log("Deleting...");
         try {
             const res = await fetch(
-                `${airtableUrl}UserData?records[]=${portfolio}`,
+                `${airtableUrl}UserPortfolioData?records[]=${portfolio}`,
                 {
                     method: "DELETE",
                     headers: {
@@ -43,8 +43,8 @@ const Overlay = ({ onClose, portfolio, getAllPortfoliosData }) => {
     };
 
     return (
-        <div className={styles.backdrop}>
-            <div className={styles.model}>
+        <div className={styles.backdropDel}>
+            <div className={styles.modalDel}>
                 {/* {JSON.stringify(user.fields.staff_name)} */}
                 <br />
                 <div className="row">

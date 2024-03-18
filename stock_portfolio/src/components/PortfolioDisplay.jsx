@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import UserDisplay from "./UserDisplay";
 import AddUserPortfolioModal from "./AddUserPortfolioModal";
 import DeleteUserPortfolioModal from "./DeleteUserPortfolioModal";
@@ -6,9 +6,14 @@ import UpdateUserPortfolioModal from "./UpdateUserPortfolioModal";
 import AddStockModal from "./AddStockModal";
 import UpdateStockModal from "./UpdateStockModal";
 import DeleteStockModal from "./DeleteStockModal";
+import styles from "./Portfolio.module.css";
+// import addImg from "../assets/addButton.png";
+// import deleteImg from "../assets/deleteButton.png";
+// import editImg from "../assets/editButton.png";
+// import refreshImg from "../assets/refreshButton.png";
 
-const PortfolioDisplay = ({ allStockData }) => {
-    const [users, setUsers] = useState([]);
+const PortfolioDisplay = ({ allStockData, users, handleButtonClick }) => {
+    // const [users, setUsers] = useState([]);
     const [selectedUser, setSelectedUser] = useState(""); // id of user in userData table
     const [allPortfolios, setAllPortfolios] = useState([]);
     const [selectedUserPortfolios, setSelectedUserPortfolios] = useState([]);
@@ -30,11 +35,12 @@ const PortfolioDisplay = ({ allStockData }) => {
     const airtableUrl = import.meta.env.VITE_AIRTABLE_URL;
 
     // get all users from UserDisplay component through lifting state
-    const handleUsersData = (usersData) => {
-        setUsers(usersData);
-    };
+    // const handleUsersData = (usersData) => {
+    //     setUsers(usersData);
+    // };
 
     // get all portfolio records
+    // console.log(users);
     const getAllPortfoliosData = async () => {
         try {
             console.log("Getting all portfolios data from airtable...");
@@ -262,105 +268,196 @@ const PortfolioDisplay = ({ allStockData }) => {
     // console.log(listAllStocks)
 
     return (
-        <div>
-            <UserDisplay handleUsersData={handleUsersData} />
-            <br />
+        <div className={styles["container"]}>
+            {/* <UserDisplay handleUsersData={handleUsersData} /> */}
+            {/* <br />
             <h2>UserPortfolios</h2>
             {JSON.stringify(allPortfolios)}
             <br />
             <br />
-            <h2>Create Portfolio</h2>
-            <button onClick={handleAddUserPortfolioClick}>
-                Create Portfolio
-            </button>
-            <br />
-            {/* {selectedPortfolio && JSON.stringify(selectedPortfolio)} */}
-            {selectedPortfolio && (
-                <div key={selectedPortfolio}>
-                    <span>name ={selectedPortfolio}</span>
+            <h2>Create Portfolio</h2> */}
+            <div className={styles["portfolio-container"]}>
+                <div className={styles["title-container"]}>
+                    <h1>Portfolio</h1>
                     <button
-                        onClick={() =>
-                            handleDeleteUserPortfolioClick(selectedPortfolio)
-                        }
+                        onClick={handleAddUserPortfolioClick}
+                        type="button"
+                        class="btn btn-secondary"
                     >
-                        Delete
-                    </button>
-                    <button
-                        onClick={() =>
-                            handleUpdateUserPortfolioClick(selectedPortfolio)
-                        }
-                    >
-                        Update
+                        Create Portfolio
                     </button>
                 </div>
-            )}
 
-            <br />
-            <br />
+                <div className={styles["selection-container"]}>
+                    {/* <h2>selectedUser portfolio</h2>
+                    {JSON.stringify(users.records)} */}
+                    {/* <br /> */}
+                    <select
+                        className={styles["selection-subContainer"]}
+                        value={selectedUser}
+                        onChange={handleUserSelectionChange}
+                    >
+                        <option value="">Select a user...</option>
+                        {users.records &&
+                            users.records.map((user) => (
+                                <option key={user.id} value={user.id}>
+                                    {user.fields.staff_name}
+                                </option>
+                            ))}
+                    </select>
+                    {/* {selectedUser} */}
+                    {/* <br />
+                <br /> */}
+                    {/* <h2>getting selected user portfolio</h2> */}
+                    {/* {JSON.stringify(selectedUserPortfolios)} */}
+                    {/* <br /> */}
+                    <select
+                        className={styles["selection-subContainer"]}
+                        value={selectedPortfolio}
+                        onChange={handleUserPortfolioSelectionChange}
+                    >
+                        <option value="">Select a portfolio...</option>
+                        {selectedUser &&
+                            selectedUserPortfolios &&
+                            selectedUserPortfolios.map((portfolio) => (
+                                <option key={portfolio.id} value={portfolio.id}>
+                                    {portfolio.fields.portfolio_name}
+                                </option>
+                            ))}
+                    </select>
+                    {/* <h2>selected portfolio</h2>
+                    {selectedPortfolio}
+                    <br /> */}
+                    {/* <br /> */}
+                    {/* {selectedPortfolio && JSON.stringify(selectedPortfolio)} */}
+                    {selectedPortfolio && (
+                        <div
+                            key={selectedPortfolio}
+                            className={styles["action-buttons"]}
+                        >
+                            {/* <span>name ={selectedPortfolio}</span> */}
+                            <button
+                                type="button"
+                                className={`btn btn-primary ${styles["button"]}`}
+                                onClick={() =>
+                                    handleUpdateUserPortfolioClick(
+                                        selectedPortfolio
+                                    )
+                                }
+                            >
+                                Update
+                            </button>
 
-            <h2>selectedUser portfolio</h2>
-            {JSON.stringify(users.records)}
-            <br />
-            <select value={selectedUser} onChange={handleUserSelectionChange}>
-                <option value="">Select a user...</option>
-                {users.records &&
-                    users.records.map((user) => (
-                        <option key={user.id} value={user.id}>
-                            {user.fields.staff_name}
-                        </option>
-                    ))}
-            </select>
-            {selectedUser}
-            <br />
-            <br />
-            <h2>getting selected user portfolio</h2>
-            {JSON.stringify(selectedUserPortfolios)}
-            <br />
-            <select
-                value={selectedPortfolio}
-                onChange={handleUserPortfolioSelectionChange}
-            >
-                <option value="">Select a portfolio...</option>
-                {selectedUser &&
-                    selectedUserPortfolios &&
-                    selectedUserPortfolios.map((portfolio) => (
-                        <option key={portfolio.id} value={portfolio.id}>
-                            {portfolio.fields.portfolio_name}
-                        </option>
-                    ))}
-            </select>
-            <h2>selected portfolio</h2>
-            {selectedPortfolio}
-            <br />
-            <h2>Selected portfolio stocks</h2>
-            {/* DISPLAY ALL STOCKS OF A SELECTED PORTFOLIIO, STYLING REQUIRED HERE */}
-            {JSON.stringify(selectedPortfolioStocks)}
+                            <button
+                                type="button"
+                                className={`btn btn-danger ${styles["button"]}`}
+                                onClick={() =>
+                                    handleDeleteUserPortfolioClick(
+                                        selectedPortfolio
+                                    )
+                                }
+                            >
+                                Delete
+                            </button>
+                        </div>
+                    )}
+                </div>
 
-            {selectedPortfolio && selectedPortfolioStocks && (
-                <button onClick={handleAddStockClick}>
-                    Add Stock to Portfolio
-                </button>
-            )}
-
-            <br />
-            {selectedPortfolio &&
-            selectedPortfolioStocks &&
-            selectedPortfolioStocks.length > 0 ? (
-                selectedPortfolioStocks.map((stock) => (
-                    <div key={stock.id}>
-                        <span>name = {stock.fields.stock_name}</span>
-                        <button onClick={() => handleDeleteStockClick(stock)}>
-                            Delete
+                <div className={styles["create-stock-container"]}>
+                    <button
+                        className={`btn btn-primary btn-sm ${styles.imageButton}`}
+                        type="button"
+                        onClick={handleButtonClick}
+                    >
+                        refresh
+                    </button>
+                    {selectedPortfolio && selectedPortfolioStocks && (
+                        <button
+                            className={`btn btn-secondary btn-sm ${styles.imageButton}`}
+                            type="button"
+                            onClick={handleAddStockClick}
+                        >
+                            Add
                         </button>
-                        <button onClick={() => handleUpdateStockClick(stock)}>
-                            Update
-                        </button>
+                    )}
+                </div>
+
+                <div className={styles["stock-list-container"]}>
+                    <div className={styles["stock-header"]}>
+                        <div>Stock Name</div>
+                        <div>Units</div>
+                        <div>Unit Price</div>
+                        <div>Price</div>
+                        <div>Market Value</div>
+                        <div>Unrealised P/L</div>
+                        <div>Actions</div>
                     </div>
-                ))
-            ) : (
-                <p>You have no stocks in current portfolio!</p>
-            )}
 
+                    {/* <h2>Selected portfolio stocks</h2> */}
+                    {/* DISPLAY ALL STOCKS OF A SELECTED PORTFOLIIO, STYLING REQUIRED HERE */}
+                    {/* {JSON.stringify(selectedPortfolioStocks)} */}
+
+                    {selectedPortfolio &&
+                    selectedPortfolioStocks &&
+                    selectedPortfolioStocks.length > 0 ? (
+                        selectedPortfolioStocks.map((stock) => (
+                            <div
+                                key={stock.id}
+                                className={styles["stock-item"]}
+                            >
+                                <div>{stock.fields.stock_name}</div>
+                                <div>{stock.fields.units}</div>
+                                <div>{stock.fields.unit_price}</div>
+                                <div>
+                                    {stock.fields["price (from StockData)"]}
+                                </div>
+                                <div>{stock.fields.market_value}</div>
+                                <div>{stock.fields.unrealised_gain_loss}</div>
+                                <button
+                                    className={`btn btn-primary btn-sm ${styles.stockButton}`}
+                                    type="button"
+                                    onClick={() =>
+                                        handleUpdateStockClick(stock)
+                                    }
+                                >
+                                    Update
+                                </button>
+                                <button
+                                    className={`btn btn-danger btn-sm ${styles.stockButton}`}
+                                    type="button"
+                                    onClick={() =>
+                                        handleDeleteStockClick(stock)
+                                    }
+                                >
+                                    Delete
+                                </button>
+                            </div>
+                        ))
+                    ) : (
+                        <p>You have no stocks in current portfolio!</p>
+                    )}
+                </div>
+
+                <div className={styles["result-container"]}>
+                    <h2 className={styles.result}>
+                        Portfolio: ${" "}
+                        {selectedPortfolioStocks.reduce((total, stock) => {
+                            return (
+                                total + parseFloat(stock.fields.market_value)
+                            );
+                        }, 0)}
+                    </h2>
+                    <h2 className={styles.result}>
+                        Total Profit/Loss: ${" "}
+                        {selectedPortfolioStocks.reduce((total, stock) => {
+                            return (
+                                total +
+                                parseFloat(stock.fields.unrealised_gain_loss)
+                            );
+                        }, 0)}
+                    </h2>
+                </div>
+            </div>
             <br />
 
             {/* ADD PORTFOLIO */}

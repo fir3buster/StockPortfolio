@@ -13,8 +13,30 @@
     background: white;
     top: 20vh;
     bottom: 40vh;
-    left: 10%;
-    width: 80%;
+    left: 30%;
+    width: 35%;
+    z-index: 100;
+    overflow: hidden;
+}
+
+.backdropDel {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 300vh;
+    z-index: 10;
+    background: rgba(0, 0, 0, 0.7);
+}
+
+.modalDel {
+    position: fixed;
+    background: white;
+    top: 30vh;
+    bottom: 40vh;
+    left: 30%;
+    height: 200px;
+    width: 35%;
     z-index: 100;
     overflow: hidden;
 }

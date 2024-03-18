@@ -34,8 +34,8 @@ const Overlay = ({ onClose, user, getUserData }) => {
     };
 
     return (
-        <div className={styles.backdrop}>
-            <div className={styles.model}>
+        <div className={styles.backdropDel}>
+            <div className={styles.modalDel}>
                 {/* {JSON.stringify(user.fields.staff_name)} */}
                 <br />
                 <div className="row">

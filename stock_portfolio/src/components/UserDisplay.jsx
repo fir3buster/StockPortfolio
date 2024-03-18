@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import AddUserModal from "./AddUserModal";
 import DeleteUserModal from "./DeleteUserModal";
 import UpdateUserModal from "./UpdateUserModal";
+import styles from "./User.module.css";
 
 const UserDisplay = ({ handleUsersData }) => {
     const [Users, setUsers] = useState([]);
@@ -29,7 +30,7 @@ const UserDisplay = ({ handleUsersData }) => {
                 handleUsersData(userData);
             }
         } catch (error) {
-            console.log(error)
+            console.log(error);
             console.log(error.message);
         }
     };
@@ -65,10 +66,21 @@ const UserDisplay = ({ handleUsersData }) => {
     // }, [selectedUser]); // Run this effect whenever selectedUser changes
 
     return (
-        <div className="UserDisplayContainer">
-            <h2>User</h2>
-            {/* {JSON.stringify(Users.records)} */}
-            {/* {Users ? (
+        <div className={styles["container"]}>
+            <div className={styles["user-container"]}>
+                <div className={styles["user-title"]}>
+                    <h1>User</h1>
+                    <button
+                        onClick={handleAddUserClick}
+                        type="button"
+                        class="btn btn-secondary"
+                    >
+                        Create User
+                    </button>
+                </div>
+
+                {/* {JSON.stringify(Users.records)} */}
+                {/* {Users ? (
                 <ul>
                     {Users.records &&
                         Users.records.map((user) => (
@@ -80,50 +92,54 @@ const UserDisplay = ({ handleUsersData }) => {
             ) : (
                 <p>Loading...</p>
             )} */}
-            <br />
-            {Users.records &&
-                Users.records.map((user) => (
-                    <div key={user.id}>
-                        <span>name = {user.fields.staff_name}</span>
-                        <button onClick={() => handleDeleteUserClick(user)}>
-                            Delete
-                        </button>
-                        <button onClick={() => handleUpdateUserClick(user)}>
-                            Update
-                        </button>
-                    </div>
-                ))}
+                <div className={styles["user-list"]}>
+                    {Users.records &&
+                        Users.records.map((user) => (
+                            <div key={user.id} className={styles["user-item"]}>
+                                <div>{user.fields.staff_name}</div>
+                                <button
+                                    className={styles["update"]}
+                                    onClick={() => handleUpdateUserClick(user)}
+                                >
+                                    Update
+                                </button>
+                                <button
+                                    className={styles["delete"]}
+                                    onClick={() => handleDeleteUserClick(user)}
+                                >
+                                    Delete
+                                </button>
+                            </div>
+                        ))}
+                </div>
 
-            <br />
-            <br />
-            <button onClick={handleAddUserClick}>Add User</button>
+                {/* ADD-USER */}
+                {showAddUserModal && (
+                    <AddUserModal
+                        onClose={handleModalClose}
+                        getUserData={getUserData}
+                    ></AddUserModal>
+                )}
 
-            {/* ADD-USER */}
-            {showAddUserModal && (
-                <AddUserModal
-                    onClose={handleModalClose}
-                    getUserData={getUserData}
-                ></AddUserModal>
-            )}
+                <br />
+                {/* DELETE-USER */}
+                {showDeleteUserModal && (
+                    <DeleteUserModal
+                        onClose={handleModalClose}
+                        user={selectedUser}
+                        getUserData={getUserData}
+                    ></DeleteUserModal>
+                )}
 
-            <br />
-            {/* DELETE-USER */}
-            {showDeleteUserModal && (
-                <DeleteUserModal
-                    onClose={handleModalClose}
-                    user={selectedUser}
-                    getUserData={getUserData}
-                ></DeleteUserModal>
-            )}
-
-            <br />
-            {showUpdateUserModal && (
-                <UpdateUserModal
-                    onClose={handleModalClose}
-                    user={selectedUser}
-                    getUserData={getUserData}
-                ></UpdateUserModal>
-            )}
+                <br />
+                {showUpdateUserModal && (
+                    <UpdateUserModal
+                        onClose={handleModalClose}
+                        user={selectedUser}
+                        getUserData={getUserData}
+                    ></UpdateUserModal>
+                )}
+            </div>
         </div>
     );
 };

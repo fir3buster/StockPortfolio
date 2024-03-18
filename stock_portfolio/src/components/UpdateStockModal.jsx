@@ -28,11 +28,15 @@ const Overlay = ({ onClose, stock, getAllUserStockData }) => {
         try {
             const stockUnits = stockUnitsRef.current.value;
             const stockUnitPrice = stockUnitPriceRef.current.value;
-            console.log(stockUnits, stockUnitPrice)
-            console.log(stock)
-            console.log(stock.fields["price (from StockData)"])
+            console.log(stockUnits, stockUnitPrice);
+            console.log(stock);
+            console.log(stock.fields["price (from StockData)"]);
+            const marketValue = parseFloat(
+                stock.fields["price (from StockData)"] * parseFloat(stockUnits)
+            ).toFixed(2);
             const unrealisedGainLoss = parseFloat(
-                (stock.fields["price (from StockData)"] - parseFloat(stockUnitPrice)) *
+                (stock.fields["price (from StockData)"] -
+                    parseFloat(stockUnitPrice)) *
                     parseFloat(stockUnits)
             ).toFixed(2);
 
@@ -54,6 +58,7 @@ const Overlay = ({ onClose, stock, getAllUserStockData }) => {
                                 unit_price: parseFloat(stockUnitPrice),
                                 unrealised_gain_loss:
                                     parseFloat(unrealisedGainLoss),
+                                market_value: parseFloat(marketValue),
                             },
                         },
                     ],
@@ -79,41 +84,41 @@ const Overlay = ({ onClose, stock, getAllUserStockData }) => {
                 <br />
                 <br />
                 <div className="row">
-                    <div className="col-md-3"></div>
+                    <div className="col-md-1"></div>
                     <div className="col-md-3">Ticker</div>
                     <input
-                        className="col-md-3"
+                        className="col-md-7"
                         defaultValue={stock.fields.stock_name}
                         readOnly
                     />
-                    <div className="col-md-3"></div>
+                    <div className="col-md-1"></div>
                 </div>
 
                 <div className="row">
-                    <div className="col-md-3"></div>
+                    <div className="col-md-1"></div>
                     <div className="col-md-3">Units</div>
                     <input
                         ref={stockUnitsRef}
                         type="number"
-                        className="col-md-3"
+                        className="col-md-7"
                         // on useRef, default value
                         defaultValue={stock.fields.units}
                     />
-                    <div className="col-md-3"></div>
+                    <div className="col-md-1"></div>
                 </div>
 
                 <div className="row">
-                    <div className="col-md-3"></div>
+                    <div className="col-md-1"></div>
                     <div className="col-md-3">Unit Price</div>
                     <input
                         ref={stockUnitPriceRef}
                         type="number"
                         step="0.01"
-                        className="col-md-3"
+                        className="col-md-7"
                         // on useRef, default value
                         defaultValue={stock.fields.unit_price}
                     />
-                    <div className="col-md-3"></div>
+                    <div className="col-md-1"></div>
                 </div>
 
                 <br />
