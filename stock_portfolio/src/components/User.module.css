@@ -9,7 +9,7 @@
 
 .user-container {
     width: 100%;
-    max-width: 1000px; /* Adjust the max-width as needed */
+    max-width: 1000px;
     margin: 0 auto;
     border-radius: 8px;
     border: 2px solid black;
