@@ -1,5 +1,3 @@
-/* Container for the entire portfolio display */
-
 .container {
     display: flex;
     flex-direction: column;
@@ -16,8 +14,8 @@
     border: 2px solid black;
     padding: 20px;
     background-color: rgba(123, 171, 235, 0.39);
-    min-width: 1000px; /* Adjust min-width as needed */
-    min-height: 650px; /* Adjust min-height as needed */
+    min-width: 1000px;
+    min-height: 650px;
     position: relative;
 }
 
@@ -92,7 +90,7 @@
 .stock-header,
 .stock-item {
     display: grid;
-    grid-template-columns: repeat(6, 1fr) 0.5fr 0.5fr; /* Adjust the number of columns as needed */
+    grid-template-columns: repeat(6, 1fr) 0.5fr 0.5fr;
     gap: 10px;
     padding: 0px 0px;
     border-bottom: 1px solid aliceblue;
@@ -101,7 +99,7 @@
 }
 
 .stock-header {
-    font-weight: bold; 
+    font-weight: bold;
 }
 
 .stock-item {
@@ -131,7 +129,7 @@
     bottom: 10px;
     width: 96%;
     background-color: lightgray;
-    display:flex;
+    display: flex;
     justify-content: space-between;
 }
 
