@@ -54,9 +54,9 @@ Wireframe design & REACT Component (HIERARCHY) can be accessed [_here_](https://
     <p>react component hierarchy</p>
 </div>
 
-## Game Design
+## Application Design
 
-The portfolio app is divided into 3 main components written in JavaScript using React framework:
+The portfolio app is divided into 3 main components and a root component written in JavaScript using React framework:
 
 ### 1. Root component of the application `App()`
 
